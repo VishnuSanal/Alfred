@@ -86,10 +86,17 @@ fun GitHubRepositoriesScreen() {
 
         is DataState.Success -> {
             val repos = (reposState as DataState.Success<List<Repository>>).data
-            LazyColumn {
-                items(repos.sortedByDescending { it.stargazersCount }) {
-                    RepoCard(it)
+            if (repos.isNotEmpty()) {
+                LazyColumn {
+                    items(repos.sortedByDescending { it.stargazersCount }) {
+                        RepoCard(it)
+                    }
                 }
+            } else {
+                Text(
+                    text = "Error: This user has no repositories.",
+                    color = MaterialTheme.colorScheme.error
+                )
             }
         }
 
