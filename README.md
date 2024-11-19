@@ -15,3 +15,8 @@ A toy Android app built using Jetpack Compose to list the GitHub repositories fo
 ## Libraries used
 
 - [retrofit](https://github.com/square/retrofit)
+
+## Features
+
+- offline caching support
+- dark/light theme support
