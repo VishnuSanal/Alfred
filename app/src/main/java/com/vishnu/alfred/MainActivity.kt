@@ -39,7 +39,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.vishnu.alfred.model.Repository
@@ -68,7 +67,7 @@ class MainActivity : ComponentActivity() {
 fun Layout(modifier: Modifier) {
     Column(modifier = modifier.fillMaxSize()) {
         SearchTextField()
-        GitHubRepositoriesScreen(modifier.align(Alignment.CenterHorizontally))
+        GitHubRepositoriesScreen(Modifier.align(Alignment.CenterHorizontally))
     }
 }
 
@@ -84,7 +83,7 @@ fun GitHubRepositoriesScreen(modifier: Modifier) {
         is DataState.Success -> {
             val repos = (reposState as DataState.Success<List<Repository>>).data
             if (repos.isNotEmpty()) {
-                LazyColumn(modifier) {
+                LazyColumn {
                     items(repos.sortedByDescending { it.stargazersCount }) {
                         RepoCard(it)
                     }
@@ -100,7 +99,7 @@ fun GitHubRepositoriesScreen(modifier: Modifier) {
         is DataState.Error -> {
             val errorMessage = (reposState as DataState.Error).message
             Text(
-                modifier = modifier,
+                modifier = modifier.padding(horizontal = 8.dp),
                 text = "Error: $errorMessage",
                 color = MaterialTheme.colorScheme.error
             )
@@ -204,14 +203,4 @@ fun SearchTextField() {
         },
         shape = RoundedCornerShape(16.dp)
     )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    AlfredTheme {
-        Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-            Layout(Modifier.padding(innerPadding))
-        }
-    }
 }

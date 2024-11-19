@@ -2,6 +2,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.vishnu.alfred.model.Repository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -15,7 +16,7 @@ class GitHubViewModel(@get:JvmName("application") val application: Application) 
     val reposState: StateFlow<DataState<List<Repository>>> = _reposState
 
     fun fetchUserRepositories(user: String) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             _reposState.value = DataState.Loading
             val result = repository.getUserRepositories(user)
             _reposState.value = result
