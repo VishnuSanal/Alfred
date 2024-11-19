@@ -78,7 +78,7 @@ fun GitHubRepositoriesScreen(modifier: Modifier) {
 
     when (reposState) {
         is DataState.Loading -> {
-            CircularProgressIndicator()
+            CircularProgressIndicator(modifier)
         }
 
         is DataState.Success -> {
