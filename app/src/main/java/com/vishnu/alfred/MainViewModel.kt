@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class GitHubViewModel(@get:JvmName("application") val application: Application) :
+class MainViewModel(@get:JvmName("application") val application: Application) :
     AndroidViewModel(application) {
 
     private val repository = GitHubRepository(RetrofitInstance.getInstance(application).api)
