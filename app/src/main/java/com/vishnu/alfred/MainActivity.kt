@@ -191,13 +191,15 @@ fun SearchTextField() {
         onValueChange = { text.value = it },
         label = { Text("Search for Users") },
         trailingIcon = @Composable {
-            Icon(
-                modifier = Modifier.clickable {
-                    viewModel.fetchUserRepositories("VishnuSanal")
-                },
-                imageVector = Icons.Default.Search,
-                contentDescription = "Search Icon"
-            )
+            if (text.value.isNotEmpty())
+                Icon(
+                    modifier = Modifier.clickable {
+                        viewModel.fetchUserRepositories(text.value)
+                    },
+                    imageVector = Icons.Default.Search,
+                    contentDescription = "Search Icon"
+                )
+
         },
         shape = RoundedCornerShape(16.dp)
     )
