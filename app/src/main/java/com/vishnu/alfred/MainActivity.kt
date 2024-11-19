@@ -68,26 +68,23 @@ class MainActivity : ComponentActivity() {
 fun Layout(modifier: Modifier) {
     Column(modifier = modifier.fillMaxSize()) {
         SearchTextField()
-        GitHubRepositoriesScreen()
+        GitHubRepositoriesScreen(modifier.align(Alignment.CenterHorizontally))
     }
 }
 
 @Composable
-fun GitHubRepositoriesScreen() {
+fun GitHubRepositoriesScreen(modifier: Modifier) {
     val reposState by viewModel.reposState.collectAsState()
 
     when (reposState) {
         is DataState.Loading -> {
-            CircularProgressIndicator(
-                modifier = Modifier
-                    .padding(16.dp),
-            )
+            CircularProgressIndicator()
         }
 
         is DataState.Success -> {
             val repos = (reposState as DataState.Success<List<Repository>>).data
             if (repos.isNotEmpty()) {
-                LazyColumn {
+                LazyColumn(modifier) {
                     items(repos.sortedByDescending { it.stargazersCount }) {
                         RepoCard(it)
                     }
@@ -102,7 +99,11 @@ fun GitHubRepositoriesScreen() {
 
         is DataState.Error -> {
             val errorMessage = (reposState as DataState.Error).message
-            Text(text = "Error: $errorMessage", color = MaterialTheme.colorScheme.error)
+            Text(
+                modifier = modifier,
+                text = "Error: $errorMessage",
+                color = MaterialTheme.colorScheme.error
+            )
         }
     }
 }
